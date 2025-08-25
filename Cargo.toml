@@ -11,7 +11,7 @@ members = [
     "node",
     "consensus/beacon",
     "consensus/hashrand",
-    "consensus/glow_dvrf",
-    "consensus/glow_lib",
-    "consensus/dag_rider"
+#    "consensus/glow_dvrf",
+#    "consensus/glow_lib",
+#    "consensus/dag_rider"
 ]
