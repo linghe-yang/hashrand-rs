@@ -10,5 +10,5 @@ members = [
     "consensus",
     "node",
     "consensus/beacon",
-    "consensus/glow_dvrf",
+#    "consensus/glow_dvrf",
 ]
