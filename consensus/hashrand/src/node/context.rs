@@ -166,7 +166,7 @@ impl HashRand {
                 }
                 //c.invoke_coin.insert(100, Duration::from_millis(sleep_time.try_into().unwrap()));
                 if let Err(e) = c.run().await {
-                    log::error!("Consensus error: {}", e);
+                    log::error!("Consensus error: {:?}", e);
                 }
             });
             Ok(exit_tx)
