@@ -256,7 +256,7 @@ impl Context{
             self.broadcast(prot_msg.clone(),round+1).await;
             self.process_baa_echo(vec_newround_vals, self.myid, round+1).await;
             self.increment_round(round).await;
-            log::error!("Started round {} with Binary AA",round+1);
+            log::info!("Started round {} with Binary AA",round+1);
         }
     }
 }

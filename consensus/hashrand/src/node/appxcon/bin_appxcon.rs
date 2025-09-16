@@ -76,7 +76,7 @@ impl HashRand{
         let now = SystemTime::now();
         log::debug!("Received ECHO2 message from node {} with content {:?} for round {}",echo2_sender,msgs,round);
         if round < self.curr_round{
-            log::warn!("Older message received, protocol advanced forward, ignoring Binary AA ECHO2 message for round {}, current_round:{}",round,self.curr_round);
+            log::debug!("Older message received, protocol advanced forward, ignoring Binary AA ECHO2 message for round {}, current_round:{}",round,self.curr_round);
             return;
         }
         for (round_iter,vals) in msgs.into_iter(){
@@ -203,7 +203,7 @@ impl HashRand{
             self.broadcast(prot_msg.clone(),round+1).await;
             self.increment_round(round).await;
             self.process_baa_echo(vec_newround_vals, self.myid, round+1).await;
-            log::error!("Started round {} with Binary AA",round+1);
+            log::info!("Started round {} with Binary AA",round+1);
         }
     }
 }

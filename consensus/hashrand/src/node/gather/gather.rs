@@ -14,7 +14,7 @@ impl HashRand {
             self.round_state.insert(round, rbc_new_state);
         }
         let rbc_state = self.round_state.get_mut(&round).unwrap();
-        log::info!("Received gather echo message {:?} from node {} for round {}",wss_indices.clone(),echo_sender,round);
+        log::debug!("Received gather echo message {:?} from node {} for round {}",wss_indices.clone(),echo_sender,round);
         if rbc_state.send_w2{
             log::warn!("Ignoring echo1 because protocol moved forward to echo2s");
             return;
