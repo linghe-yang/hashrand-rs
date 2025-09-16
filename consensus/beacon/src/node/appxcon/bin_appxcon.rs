@@ -128,7 +128,7 @@ impl Context{
                 let rnd_state = rbc_state.round_state.get_mut(&round).unwrap();
                 rnd_state.add_echo2(vals, echo2_sender, self.num_nodes, self.num_faults);
                 if rnd_state.term_vals.len() == rbc_state.committee.len() {
-                    log::info!("All n instances of Binary AA terminated for round {} related to WSSInit {}",round,round_iter);
+                    log::debug!("All n instances of Binary AA terminated for round {} related to WSSInit {}",round,round_iter);
                     self.add_benchmark(String::from("process_baa_echo2"), now.elapsed().unwrap().as_nanos());
                     if self.check_termination(round){
                         // Begin next round

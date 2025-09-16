@@ -89,7 +89,7 @@ impl HashRand{
                 let rnd_state = rbc_state.round_state.get_mut(&round).unwrap();
                 rnd_state.add_echo2(vals, echo2_sender, self.num_nodes, self.num_faults);
                 if rnd_state.term_vals.len() == rbc_state.committee.len() {
-                    log::info!("All n instances of Binary AA terminated for round {} related to WSSInit {}",round,round_iter);
+                    log::debug!("All n instances of Binary AA terminated for round {} related to WSSInit {}",round,round_iter);
                     //let vec_vals:Vec<(Replica,Vec<u8>)> = rnd_state.term_vals.clone().into_iter().map(|(rep,val)| (rep,BigInt::to_signed_bytes_be(&val))).collect();
                     self.add_benchmark(String::from("process_baa_echo2"), now.elapsed().unwrap().as_nanos());
                     if self.check_termination(round){
@@ -122,12 +122,12 @@ impl HashRand{
                 let rbc_state = self.round_state.get(&round_iter).unwrap();
                 if rbc_state.round_state.contains_key(&round){
                     if rbc_state.round_state.get(&round).unwrap().term_vals.len() < rbc_state.committee.len(){
-                        log::info!("Cannot begin next BinAA round because BinAA of RBC in round {} did not terminate round {}, term vals: {:?}",round_iter,round,rbc_state.round_state.get(&round).unwrap().term_vals);
+                        log::debug!("Cannot begin next BinAA round because BinAA of RBC in round {} did not terminate round {}, term vals: {:?}",round_iter,round,rbc_state.round_state.get(&round).unwrap().term_vals);
                         can_begin_next_round = false;
                     }
                 }
                 else {
-                    log::info!("Cannot begin next BinAA round because BinAA of RBC in round {} does not have state for round {}",round_iter,round);
+                    log::debug!("Cannot begin next BinAA round because BinAA of RBC in round {} does not have state for round {}",round_iter,round);
                     can_begin_next_round = false;
                 }
             }
