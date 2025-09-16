@@ -22,7 +22,7 @@ impl Context {
         let rbc_state = self.round_state.get_mut(&round).unwrap();
         log::debug!("Received gather echo message {:?} from node {} for round {}",wss_indices.clone(),echo_sender,round);
         if rbc_state.send_w2{
-            log::warn!("Ignoring echo1 because protocol moved forward to echo2s");
+            log::debug!("Ignoring echo1 because protocol moved forward to echo2s");
             return;
         }
         else {
@@ -67,7 +67,7 @@ impl Context {
                 // echo2 only needs to be sent when the round has secret sharing. 
                 if round%self.frequency == 0{
                     // Send out ECHO2 messages
-                    log::info!("Accepted n-f witnesses, sending ECHO2 messages for Gather from node {}",self.myid);
+                    log::debug!("Accepted n-f witnesses, sending ECHO2 messages for Gather from node {}",self.myid);
                     rbc_state.send_w2 = true;
                     msgs_to_be_sent.push(CoinMsg::GatherEcho2(
                         GatherMsg{nodes: rbc_state.terminated_secrets.clone().into_iter().collect()},

@@ -57,7 +57,7 @@ impl Context{
                 let (echo1_msgs,echo2_msgs) = rnd_state.add_echo(values, echo_sender, self.num_nodes, self.num_faults);
                 // If all the Binary AA instances in this rbc_state terminate (i.e. finish their required number of rounds), begin the next round
                 if rnd_state.term_vals.len() == rbc_state.committee.len() {
-                    log::info!("All instances of Binary AA terminated for round {}, checking for termination related to round {}",round,round_iter);
+                    log::debug!("All instances of Binary AA terminated for round {}, checking for termination related to round {}",round,round_iter);
                     // This function contains a list of all checks to conduct before a round can be terminated. 
                     if self.check_termination(round){
                         // Begin next round
@@ -236,7 +236,7 @@ impl Context{
                 //rbc_state.contribution_map.insert(rep, (val,false,BigInt::from(0i32)));
             }
             log::error!("Terminated beacon for round {} with committee {:?} and appxcon_vals: {:?}, term_secrets {:?}, comm_vector {:?}", round_begin-1,rbc_state.committee,rbc_state.appx_con_term_vals,rbc_state.terminated_secrets,rbc_state.comm_vectors.keys());
-            log::info!("Terminated round {}, sending message to syncer",(round_begin-1).clone());
+            log::debug!("Terminated round {}, sending message to syncer",(round_begin-1).clone());
             let cancel_handler = self.sync_send.send(0, SyncMsg { sender: self.myid, state: SyncState::BeaconFin(round_begin-1, self.myid), value:0}).await;
             self.add_cancel_handler(cancel_handler);
             // Start reconstruction
@@ -256,7 +256,7 @@ impl Context{
             self.broadcast(prot_msg.clone(),round+1).await;
             self.process_baa_echo(vec_newround_vals, self.myid, round+1).await;
             self.increment_round(round).await;
-            log::info!("Started round {} with Binary AA",round+1);
+            log::debug!("Started round {} with Binary AA",round+1);
         }
     }
 }

@@ -107,7 +107,7 @@ impl Context{
                     appxcon_map.insert(rep, val);
                 }
                 rbc_iter_state.sync_secret_maps().await;
-                log::info!("Terminated round {}, sending message to syncer",term_round.clone());
+                log::debug!("Terminated round {}, sending message to syncer",term_round.clone());
                 let cancel_handler = self.sync_send.send(0, SyncMsg { sender: self.myid, state: SyncState::BeaconFin(term_round, self.myid), value:0}).await;
                 self.add_cancel_handler(cancel_handler);
                 // Start reconstruction

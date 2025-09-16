@@ -20,7 +20,7 @@ impl HashRand{
             return;
         }
         
-        log::info!("Protocol started");
+        log::info!("Hashrand Protocol started");
         let mut beacon_msgs = Vec::new();
         let mut rbc_vec = Vec::new();
         if new_round%self.frequency == 0{

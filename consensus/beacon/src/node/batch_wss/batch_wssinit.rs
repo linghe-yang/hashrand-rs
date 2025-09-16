@@ -27,7 +27,7 @@ impl Context{
             return;
         }
         
-        log::info!("Protocol started");
+        log::info!("Hashrand Protocol started");
         let mut beacon_msgs = Vec::new();
         let mut rbc_vec = Vec::new();
         // Start a new BAwVSS instance once every frequency rounds. 

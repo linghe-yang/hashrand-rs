@@ -63,11 +63,11 @@ impl HashRand{
         }
         let rbc_state = self.round_state.get_mut(&round).unwrap();
         if coin_num == 0 && rbc_state.committee_elected{
-            log::info!("Committee election over, skipping secret share");
+            log::debug!("Committee election over, skipping secret share");
             return;
         }
         if rbc_state.cleared{
-            log::info!("State cleared for round {}, exiting",round);
+            log::debug!("State cleared for round {}, exiting",round);
             return;
         }
         //let mut send_next_recon = false;
@@ -76,7 +76,7 @@ impl HashRand{
             let sec_origin = wss_msg.origin.clone();
             // coin 0 is set for committee election
             if rbc_state.recon_secrets.contains(&coin_num){
-                log::warn!("Older secret share received from node {}, not processing share for coin_num {}", sec_origin,coin_num);
+                log::debug!("Older secret share received from node {}, not processing share for coin_num {}", sec_origin,coin_num);
                 return;
             }
             rbc_state.add_secret_share(coin_num, wss_msg.origin, share_sender, wss_msg.clone());
