@@ -39,7 +39,7 @@ impl Context {
             self.round_state.insert(round, rbc_new_state);
         }
         let rbc_state = self.round_state.get_mut(&round).unwrap();
-        log::info!("Received gather echo2 message {:?} from node {} for round {}",wss_indices.clone(),echo_sender,round);
+        log::debug!("Received gather echo2 message {:?} from node {} for round {}",wss_indices.clone(),echo_sender,round);
         rbc_state.witness2.insert(echo_sender, wss_indices);
         self.add_benchmark(String::from("process_gatherecho"), now.elapsed().unwrap().as_nanos());
         self.witness_check(round).await;

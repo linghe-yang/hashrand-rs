@@ -78,7 +78,7 @@ impl RoundState{
                             // terminate protocol for instance &rep
                             let vec_arr:Vec<BigInt> = arr_tup.1.clone().into_iter().map(|x| x).collect();
                             let next_round_val = (vec_arr[0].clone()+vec_arr[1].clone())/2;
-                            log::info!("Terminated approx agreement of rep {} with value {}",rep,next_round_val);
+                            log::debug!("Terminated approx agreement of rep {} with value {}",rep,next_round_val);
                             self.term_vals.insert(rep, next_round_val);
                         }
                         arr_vec[0].4 = true;
@@ -105,7 +105,7 @@ impl RoundState{
                                 // terminate protocol for instance &rep
                                 let vec_arr:Vec<BigInt> = arr_tup.1.clone().into_iter().map(|x| x).collect();
                                 let next_round_val = (vec_arr[0].clone()+vec_arr[1].clone())/2;
-                                log::info!("Terminated approx agreement of rep {} with value {}",rep,next_round_val);
+                                log::debug!("Terminated approx agreement of rep {} with value {}",rep,next_round_val);
                                 self.term_vals.insert(rep, next_round_val);
                             }
                             arr_vec[1].4 = true;
@@ -137,7 +137,7 @@ impl RoundState{
                     if arr_vec[0].2.len() >= num_nodes-num_faults{
                         log::debug!("Processing values: {:?} inst: {} echo count: {}",arr_vec[0].clone(),rep, arr_vec[0].1.len());
                         arr_tup.2.push(parsed_bigint);
-                        log::info!("Terminated approx agreement of rep {} with value {}",rep,arr_vec[0].0.clone());
+                        log::debug!("Terminated approx agreement of rep {} with value {}",rep,arr_vec[0].0.clone());
                         self.term_vals.insert(rep, arr_vec[0].0.clone());
                     }
                 }
@@ -151,7 +151,7 @@ impl RoundState{
                     else{
                         arr_vec[1].2.insert(echo2_sender);
                         if arr_vec[1].2.len() >= num_nodes-num_faults{
-                            log::info!("Terminated approx agreement of rep {} with value {}",rep,arr_vec[1].0.clone());
+                            log::debug!("Terminated approx agreement of rep {} with value {}",rep,arr_vec[1].0.clone());
                             arr_tup.2.push(parsed_bigint);
                             self.term_vals.insert(rep, arr_vec[1].0.clone());
                         }

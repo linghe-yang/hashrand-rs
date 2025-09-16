@@ -13,7 +13,7 @@ impl HashRand{
         let mut send_valmap_echo1:HashMap<u32, Vec<(Replica, Vec<u8>)>> = HashMap::default();
         let mut send_valmap_echo2:HashMap<u32, Vec<(Replica, Vec<u8>)>> = HashMap::default();
         if round < self.curr_round{
-            log::warn!("Older message received, protocol advanced forward, ignoring Binary AA ECHO message for round {}, current round {}",round,self.curr_round);
+            log::debug!("Older message received, protocol advanced forward, ignoring Binary AA ECHO message for round {}, current round {}",round,self.curr_round);
             return;
         }
         log::debug!("Received ECHO1 message from node {} with content {:?} for round {}",echo_sender,msgs,round);
