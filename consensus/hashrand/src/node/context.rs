@@ -126,7 +126,7 @@ impl HashRand {
                 let prime = BigInt::parse_bytes(b"685373784908497",10).unwrap();
                 let epsilon:u32 = ((1024*1024)/(config.num_nodes*config.num_faults)) as u32;
                 let rounds = (50.0 - ((epsilon as f32).log2().ceil())) as u32;
-                log::error!("Appx consensus rounds: {}",rounds);
+                log::debug!("Appx consensus rounds: {}",rounds);
                 let mut c = HashRand {
                     net_send:consensus_net,
                     net_recv:rx_net_to_consensus,
@@ -166,7 +166,7 @@ impl HashRand {
                 }
                 //c.invoke_coin.insert(100, Duration::from_millis(sleep_time.try_into().unwrap()));
                 if let Err(e) = c.run().await {
-                    log::error!("Consensus error: {:?}", e);
+                    log::debug!("Consensus error: {:?}", e);
                 }
             });
             Ok(exit_tx)

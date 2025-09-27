@@ -27,7 +27,7 @@ impl HashRand{
         }
         let (_beacon,shard) = rbc_state.msgs.get(&sec_origin).unwrap();
         if shard.mp.root() != master_root || !ctrbc.verify_mr_proof(){
-            log::error!("Merkle root of WSS Init from {} did not match Merkle root of Recon from {}",sec_origin,self.myid);
+            log::debug!("Merkle root of WSS Init from {} did not match Merkle root of Recon from {}",sec_origin,self.myid);
             return;
         }
         rbc_state.add_recon(sec_origin, recon_sender, &ctrbc);

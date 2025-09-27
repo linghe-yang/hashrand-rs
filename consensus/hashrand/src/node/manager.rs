@@ -16,9 +16,9 @@ impl HashRand {
                 let num_responses = self.coin_request_mapping.get(&request_round).unwrap();
                 if num_responses.1.len() >= self.num_faults + 1{
                     // This request has been reconstructed already, return value
-                    log::error!("Sending beacon for index {} to requester",request_round);
+                    log::debug!("Sending beacon for index {} to requester",request_round);
                     if let Err(e) = self.coin_send_channel.send((request_round,num_responses.0)).await {
-                        log::warn!(
+                        log::debug!(
                             "Failed to beacon {} to the consensus: {}",
                             request_round, e
                         );

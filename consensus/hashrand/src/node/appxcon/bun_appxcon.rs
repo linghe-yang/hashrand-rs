@@ -62,9 +62,9 @@ impl HashRand{
             for (index,mut values) in hmap_iter.clone().into_iter(){
                 values.sort();
                 if values.len() <= high_threshold{
-                    log::error!("This should never happen: 
+                    log::debug!("This should never happen: 
                     Appxcon indices for round {} in round {} are {:?} and values {:?}",round_iter,round,hmap_iter.keys(),hmap_iter);
-                    log::error!("Appxconallroundval map: {:?}",rbc_state.appxcon_allround_vals);
+                    log::debug!("Appxconallroundval map: {:?}",rbc_state.appxcon_allround_vals);
                     continue;
                 }
                 let index_val:BigInt = (values[min_threshold].clone()+ values[high_threshold].clone())/2;

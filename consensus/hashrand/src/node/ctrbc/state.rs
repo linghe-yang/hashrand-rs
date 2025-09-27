@@ -201,7 +201,7 @@ impl CTRBCState{
                 !merkle_proof.validate::<HashingAlg>() ||
                 merkle_proof.root() != sharing_merkle_root
                 {
-            log::error!("Merkle proof invalid for WSS Init message comm: {:?} wss_com: {:?} sec_num: {} commvec:mr: {:?} share_merk_root: {:?}  inst: {} merk_hash: {:?} merk_proof_item: {:?}",commitment,wss_msg.commitment.1.clone(),coin_number,sharing_merkle_root,merkle_proof.root(),wss_msg.origin,do_hash_merkle(commitment.as_slice()), merkle_proof.item().clone());
+            log::debug!("Merkle proof invalid for WSS Init message comm: {:?} wss_com: {:?} sec_num: {} commvec:mr: {:?} share_merk_root: {:?}  inst: {} merk_hash: {:?} merk_proof_item: {:?}",commitment,wss_msg.commitment.1.clone(),coin_number,sharing_merkle_root,merkle_proof.root(),wss_msg.origin,do_hash_merkle(commitment.as_slice()), merkle_proof.item().clone());
             return false;
         }
         true
@@ -261,7 +261,7 @@ impl CTRBCState{
             let res_root = self.verify_reconstructed_root(sec_origin, num_nodes, num_faults, batch_size, vec_fmap);
             match res_root.clone() {
                 None=> {
-                    log::error!("Error resulted in constructing erasure-coded data");
+                    log::debug!("Error resulted in constructing erasure-coded data");
                     return None;
                 }
                 Some(_vec)=>{
@@ -362,7 +362,7 @@ impl CTRBCState{
             reconstruct_and_return(&shard_map, num_nodes, num_faults);
         match res {
             Err(error)=> {
-                log::error!("Shard reconstruction failed because of the following reason {:?}",error);
+                log::debug!("Shard reconstruction failed because of the following reason {:?}",error);
                 return None;
             },
             Ok(vec_x)=> {
@@ -384,7 +384,7 @@ impl CTRBCState{
                     return Some((merkle_root.clone(),hashes_rbc));
                 }
                 else {
-                    log::error!("Reconstructing root hash polynomial failed, with params {:?} {:?} {:?}", hashes_rbc.clone(),merkle_tree.root(),merkle_root);
+                    log::debug!("Reconstructing root hash polynomial failed, with params {:?} {:?} {:?}", hashes_rbc.clone(),merkle_tree.root(),merkle_root);
                     return None;
                 }
             }

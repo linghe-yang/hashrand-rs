@@ -8,11 +8,11 @@ impl HashRand{
     pub async fn process_rbcinit(self: &mut HashRand, beacon_msg:BeaconMsg,ctr:CTRBCMsg){
         let now = SystemTime::now();
         if !ctr.verify_mr_proof(){
-            log::error!("Invalid Merkle Proof sent by node {} in round {}, abandoning RBC",ctr.origin,ctr.round);
+            log::debug!("Invalid Merkle Proof sent by node {} in round {}, abandoning RBC",ctr.origin,ctr.round);
             return;
         }
         if !beacon_msg.verify_proofs(){
-            log::error!("Invalid Merkle Proof of secret sent by node {} in round {}, abandoning RBC",ctr.origin,ctr.round);
+            log::debug!("Invalid Merkle Proof of secret sent by node {} in round {}, abandoning RBC",ctr.origin,ctr.round);
             return;
         }
         // if beacon_msg.gather_1.is_some(){
