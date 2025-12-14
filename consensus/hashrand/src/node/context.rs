@@ -234,7 +234,7 @@ impl HashRand {
                     self.process_msg( msg).await;
                 },
                 coin_recon = self.coin_construction.recv() => {
-                    log::info!("Got request to reconstruct coin: {:?}", coin_recon);
+                    log::debug!("Got request to reconstruct coin: {:?}", coin_recon);
                     let round = coin_recon.ok_or_else(||
                         anyhow!("Networking layer has closed")
                     )?;
