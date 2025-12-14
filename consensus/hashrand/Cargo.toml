@@ -38,3 +38,6 @@ futures-util = "0"
 network = { package = "network", git = "https://github.com/linghe-yang/libnet-rs.git" }
 
 nohash-hasher = "0.2.0"
+
+[features]
+bandwidth = []

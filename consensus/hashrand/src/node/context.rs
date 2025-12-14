@@ -1,12 +1,13 @@
+#![allow(warnings)]
 use std::{time::{SystemTime, UNIX_EPOCH}, collections::{VecDeque, HashMap, HashSet}};
 
 use anyhow::{Result, Ok,anyhow};
-use network::{plaintcp::{TcpReliableSender, CancelHandler}, Acknowledgement};
+use network::{plaintcp::{TcpReliableSender, CancelHandler}, Acknowledgement, Message};
 use num_bigint::BigInt;
 use tokio::{sync::{mpsc::{UnboundedReceiver, Sender, Receiver}, oneshot}};
 use types::{beacon::{WrapperMsg, Replica, CoinMsg}, Round};
 use config::Node;
-
+use bytes::{Bytes};
 use super::{Handler, CTRBCState};
 
 use fnv::FnvHashMap;
@@ -185,7 +186,7 @@ impl HashRand {
             self.bench.insert(func, elapsed_time);
         }
     }
-
+    #[cfg(not(feature = "bandwidth"))]
     pub async fn broadcast(&mut self, protmsg:CoinMsg,round:Round){
         let sec_key_map = self.sec_key_map.clone();
         for (replica,sec_key) in sec_key_map.into_iter() {
@@ -198,6 +199,22 @@ impl HashRand {
             }
         }
     }
+    #[cfg(feature = "bandwidth")]
+    pub async fn broadcast(&mut self, protmsg:CoinMsg,round:Round){
+        let mut total_bytes = 0;
+        let sec_key_map = self.sec_key_map.clone();
+        for (replica,sec_key) in sec_key_map.into_iter() {
+            if replica != self.myid{
+                let wrapper_msg = WrapperMsg::new(protmsg.clone(), self.myid, &sec_key.as_slice(),round);
+                total_bytes += Bytes::from(wrapper_msg.to_bytes()).len();
+                let cancel_handler:CancelHandler<Acknowledgement> = self.net_send.send(replica, wrapper_msg).await;
+                self.add_cancel_handler(cancel_handler);
+                // let sent_msg = Arc::new(wrapper_msg);
+                // self.c_send(replica, sent_msg).await;
+            }
+        }
+        log::info!("Network sending bytes: {:?}", total_bytes);
+    }
 
     pub fn add_cancel_handler(&mut self, canc: CancelHandler<Acknowledgement>){
         self.cancel_handlers
@@ -207,6 +224,8 @@ impl HashRand {
     }
 
     pub async fn send(&mut self,replica:Replica, wrapper_msg:WrapperMsg){
+        #[cfg(feature = "bandwidth")]
+        log::info!("Network sending bytes: {:?}", Bytes::from(wrapper_msg.to_bytes()).len());
         let cancel_handler:CancelHandler<Acknowledgement> = self.net_send.send(replica, wrapper_msg).await;
         self.add_cancel_handler(cancel_handler);
     }
