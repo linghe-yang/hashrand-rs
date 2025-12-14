@@ -78,6 +78,7 @@ impl HashRand {
         _sleep:u128,
         batch:usize,
         frequency:Round,
+        stop_round:Round,
         // construct coin when there is an element in this queue
         construct_coin: Receiver<u32>,
         // beacon_send channel
@@ -144,7 +145,7 @@ impl HashRand {
                     recon_round:20000,
                     num_messages:0,
                     max_rounds: 20000,
-                    tmp_stop_round: 200,
+                    tmp_stop_round: stop_round,
                     bin_bun_aa: false,
                     committee_size:2*config.num_faults+1,
                     
