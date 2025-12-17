@@ -176,6 +176,9 @@ impl HashRand{
                 rbc_state.round_state.get(&(round-1)).unwrap().term_vals.clone().into_iter()
                 .filter(|(_rep,num)| *num > BigInt::from(0i32))
                 .collect();
+            if mapped_rvecs.len() != 0{
+                log::info!("Terminate approximate agreement started from round {}", round_begin-1);
+            }
             for (rep,val) in mapped_rvecs.into_iter(){
                 rbc_state.appx_con_term_vals.insert(rep, val);
                 //rbc_state.contribution_map.insert(rep, (val,false,BigInt::from(0i32)));

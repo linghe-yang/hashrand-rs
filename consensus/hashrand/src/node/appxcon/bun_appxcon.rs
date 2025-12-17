@@ -100,6 +100,7 @@ impl HashRand{
                 return_map.remove(&term_round);
                 let rbc_iter_state = self.round_state.get_mut(&term_round).unwrap();
                 let appxcon_map = &mut rbc_iter_state.appx_con_term_vals;
+                log::info!("Terminate approximate agreement in round {}", term_round);
                 log::debug!("Approximate Agreement Protocol terminated with values {:?}",round_vecs.clone());
 
                 // Reconstruct values
