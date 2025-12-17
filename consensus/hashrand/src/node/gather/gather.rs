@@ -91,7 +91,8 @@ impl HashRand {
                 // Received n-f witness2s. Start approximate agreement from here. 
                 log::debug!("Accepted n-f witness2 for node {} with set {:?}",self.myid,rbc_state.terminated_secrets.clone());
                 rbc_state.started_baa = true;
-                // First beacon should have terminated. 
+                // First beacon should have terminated.
+                log::info!("Start approximate agreement from round {}", round);
                 if round >= self.rounds_aa+3{
                     let closest_finished = round-self.rounds_aa-3;
                     let fin_freq = (closest_finished/self.frequency)*self.frequency;

@@ -182,6 +182,7 @@ impl HashRand{
             }
             log::debug!("Terminated beacon for round {} with committee {:?} and appxcon_vals: {:?}, term_secrets {:?}, comm_vector {:?}", round_begin-1,rbc_state.committee,rbc_state.appx_con_term_vals,rbc_state.terminated_secrets,rbc_state.comm_vectors.keys());
             log::debug!("Terminated round {}, sending message to syncer",(round_begin-1).clone());
+            log::info!("Terminated approximate agreement in round {}", round);
             //let cancel_handler = self.sync_send.send(0, SyncMsg { sender: self.myid, state: SyncState::BeaconFin(round_begin-1, self.myid), value:0}).await;
             //self.add_cancel_handler(cancel_handler);
             // Start reconstruction

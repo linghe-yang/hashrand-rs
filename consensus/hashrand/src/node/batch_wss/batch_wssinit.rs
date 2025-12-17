@@ -25,7 +25,6 @@ impl HashRand{
         let mut rbc_vec = Vec::new();
         if new_round%self.frequency == 0{
             // Start BatchWSS.
-            log::info!("Hashrand BatchWSS new batch started");
             let faults = self.num_faults;
             // Secret number can be increased to any number possible, but there exists a performance tradeoff with the size of RBC increasing\
             // TODO: Does it affect security in any manner?
