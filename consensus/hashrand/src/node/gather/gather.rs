@@ -164,7 +164,7 @@ impl HashRand {
                     }
                     rbc_state_iter.round_state.insert(round, round_state);
                 }
-                log::info!("Start approximate agreement from round {}", round);
+                log::info!("Consensus for index {} started", round);
                 self.next_round_begin(round,true).await;
             }
         }
