@@ -83,6 +83,7 @@ impl HashRand{
             }
         }
         for prot_msg in msgs_to_be_sent.iter(){
+            log::info!("Start Gather+ approximate agreement from round {}", round);
             self.broadcast(prot_msg.clone(),round.clone()).await;
             match prot_msg {
                 CoinMsg::GatherEcho(gather_msg, echo_sender,round) =>{
