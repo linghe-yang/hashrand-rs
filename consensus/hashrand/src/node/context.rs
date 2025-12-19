@@ -260,9 +260,8 @@ impl HashRand {
                     )?;
                     if round == 0{
                         log::info!("Beacon service start at {}", SystemTime::now()
-                                .duration_since(UNIX_EPOCH)
-                                .unwrap()
-                                .as_millis());
+                                .duration_since(UNIX_EPOCH)?
+                                .as_micros());
                         self.start_new_round(20000,Vec::new()).await;
                         // let cancel_handler = self.sync_send.send(0, SyncMsg { sender: self.myid, state: SyncState::STARTED, value:0}).await;
                         // self.add_cancel_handler(cancel_handler);

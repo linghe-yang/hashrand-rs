@@ -1,5 +1,5 @@
 use std::{time::SystemTime, collections::HashMap};
-
+use std::time::UNIX_EPOCH;
 use async_recursion::async_recursion;
 use num_bigint::BigInt;
 use num_traits::{FromPrimitive};
@@ -164,7 +164,11 @@ impl HashRand {
                     }
                     rbc_state_iter.round_state.insert(round, round_state);
                 }
-                log::info!("Consensus for index {} started", round);
+                let now = SystemTime::now()
+                    .duration_since(UNIX_EPOCH)
+                    .unwrap()
+                    .as_micros();
+                log::info!("Consensus for index {} started at {}", round, now);
                 self.next_round_begin(round,true).await;
             }
         }
