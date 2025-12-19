@@ -259,7 +259,7 @@ impl HashRand {
                         anyhow!("Networking layer has closed")
                     )?;
                     if round == 0{
-                        log::info!("Consensus Start time: {:?}", SystemTime::now()
+                        log::info!("Beacon service start at {}", SystemTime::now()
                                 .duration_since(UNIX_EPOCH)
                                 .unwrap()
                                 .as_millis());
