@@ -51,7 +51,7 @@ impl HashRand {
             }
             log::debug!("Next round check: tmp_stop_round: {},curr_round: {}, coin_comp: {},rec_round: {}, last_comp_round: {}",self.tmp_stop_round,self.curr_round,coin_completed,rec_round,last_completed_round);
             if coin_completed && self.tmp_stop_round-self.curr_round <= self.frequency && last_completed_round - rec_round < 200 {
-                self.tmp_stop_round += 200;
+                // self.tmp_stop_round += 200;
                 if self.tmp_stop_round-self.curr_round == 1{
                     self.next_round_begin(self.curr_round,false).await;
                 }
